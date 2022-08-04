@@ -7,22 +7,37 @@ url = 'data/prod.json';
 // taikomes
 const shopItemsEl = document.getElementById('shop-items');
 const sortPriceBtnEl = document.getElementById('sort-price');
+const searchEl = document.getElementById('search');
+const searchBtnEL = document.getElementById('search-btn');
 
 // main Shop state
 let mainShopItemsArr = [];
 
-// pagrindinis veiksmas
+// pagrindinis veiksmas ------------------------------------------------------
 getProducts().then((items) => makeShopItemsList(items));
 // getProducts();
 
-// event listeners
+let sortedAsc = false;
+
+// event listeners --------------------------------------------------
 sortPriceBtnEl.addEventListener('click', () => {
-  makeShopItemsList(mainShopItemsArr.slice(0, 3));
+  const sorted = mainShopItemsArr.sort((aObj, bObj) => aObj.price - bObj.price);
+  makeShopItemsList(sorted);
   // vietoj slice paduodi isrikuota masyva pagal kaina
+
   // antra karta paspaudus isrikiuoti kita eiles tvarka
 });
 
-// funkcijos
+searchBtnEL.addEventListener('click', () => {
+  console.log('search event', searchEl.value);
+  const searchTerm = searchEl.value.trim();
+  // ir paieskos termina ir stringa kuriame ieskom padarto lowercase pries ieskant
+  const filteredItems = mainShopItemsArr.filter((shObj) => shObj.title.includes(searchTerm));
+  console.log('filteredItems ===', filteredItems);
+  makeShopItemsList(filteredItems);
+});
+
+// funkcijos --------------------------------------------------------------
 async function getProducts() {
   const resp = await fetch(url);
   const dataInJS = await resp.json();
