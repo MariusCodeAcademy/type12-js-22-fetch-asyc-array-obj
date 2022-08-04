@@ -17,6 +17,26 @@
 
     <div class="filters">
       <button id="sort-price">Sort by price</button>
+      <fieldset class="flex">
+        <legend>Kategorijos</legend>
+        <div>
+          <label for="all">All</label>
+          <input type="radio" name="category" value="all" id="all">
+        </div>
+        <div>
+          <label for="electronics">Electronics</label>
+          <input type="radio" name="category" value="electronics" id="electronics">
+        </div>
+        <div>
+          <label for="jewelery">Jewelery</label>
+          <input type="radio" name="category" value="jewelery" id="jewelery">
+        </div>
+      </fieldset>
+      <fieldset class="flex">
+        <legend>Search</legend>
+        <input type="search" id="search" placeholder="search">
+        <button id="search-btn">search</button>
+      </fieldset>
     </div>
     <div id="shop-items" class="shop-items">
       <div class="shop-item card">

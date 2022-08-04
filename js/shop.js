@@ -19,6 +19,7 @@ getProducts().then((items) => makeShopItemsList(items));
 sortPriceBtnEl.addEventListener('click', () => {
   makeShopItemsList(mainShopItemsArr.slice(0, 3));
   // vietoj slice paduodi isrikuota masyva pagal kaina
+  // antra karta paspaudus isrikiuoti kita eiles tvarka
 });
 
 // funkcijos
