@@ -23,7 +23,17 @@ async function getUser() {
     console.warn(error);
   }
 }
-getUser();
+// getUser();
 
 // parisiusti iskonsolinti visus vardus masyve su async i await
-// https://jsonplaceholder.typicode.com/users
+const userUrl = 'https://jsonplaceholder.typicode.com/users';
+
+const getUsersArray = async () => {
+  const resp = await fetch(userUrl);
+  const dataInJs = await resp.json();
+  console.log('dataInJs ===', dataInJs);
+  const namesArr = dataInJs.map((userObj) => userObj.name);
+  console.log('namesArr ===', namesArr);
+};
+
+getUsersArray();
