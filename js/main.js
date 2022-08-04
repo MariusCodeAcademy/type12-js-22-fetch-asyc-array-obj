@@ -2,7 +2,7 @@
 console.log('main.js');
 
 // fetch
-const url = 'https://reqres.in/api/users/5000000';
+const url = 'https://reqres.in/api/users/5';
 
 // gauti ir iskonsolinti sito user objekta
 
