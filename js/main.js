@@ -2,7 +2,7 @@
 console.log('main.js');
 
 // fetch
-const url = 'https://reqres.in/api/users/5';
+const url = 'https://reqres.in/api/users/5000000';
 
 // gauti ir iskonsolinti sito user objekta
 
@@ -13,8 +13,17 @@ const url = 'https://reqres.in/api/users/5';
 
 // async ir await
 async function getUser() {
-  const resp = await fetch(url);
-  const dataInJs = await resp.json();
-  console.log('dataInJs async ir await ===', dataInJs.data);
+  // prideti try catch
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) throw 'BAAAAd thing haaapened';
+    const dataInJs = await resp.json();
+    console.log('dataInJs async ir await ===', dataInJs.data);
+  } catch (error) {
+    console.warn(error);
+  }
 }
 getUser();
+
+// parisiusti iskonsolinti visus vardus masyve su async i await
+// https://jsonplaceholder.typicode.com/users
