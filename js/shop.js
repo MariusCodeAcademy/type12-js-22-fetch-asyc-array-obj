@@ -7,6 +7,7 @@ url = 'data/prod.json';
 // taikomes
 const shopItemsEl = document.getElementById('shop-items');
 const sortPriceBtnEl = document.getElementById('sort-price');
+const apiSortPriceBtnEl = document.getElementById('sort-price-api');
 const searchEl = document.getElementById('search');
 const searchBtnEL = document.getElementById('search-btn');
 
@@ -14,7 +15,7 @@ const searchBtnEL = document.getElementById('search-btn');
 let mainShopItemsArr = [];
 
 // pagrindinis veiksmas ------------------------------------------------------
-getProducts().then((items) => makeShopItemsList(items));
+getProducts(url).then((items) => makeShopItemsList(items));
 // getProducts();
 
 let sortedAsc = false;
@@ -28,6 +29,24 @@ sortPriceBtnEl.addEventListener('click', () => {
   // antra karta paspaudus isrikiuoti kita eiles tvarka
 });
 
+apiSortPriceBtnEl.addEventListener('mousedown', async () => {
+  // norim gauti produktus is
+  // https://fakestoreapi.com/products?sort=desc
+  // https://fakestoreapi.com/products?sort=asc
+  console.log('sort api');
+  let sorted;
+  if (apiSortPriceBtnEl.textContent.toLocaleLowerCase().endsWith('asc')) {
+    apiSortPriceBtnEl.textContent = apiSortPriceBtnEl.textContent.replace('ASC', 'DESC');
+    sorted = await getProducts('https://fakestoreapi.com/products?sort=asc');
+  } else {
+    apiSortPriceBtnEl.textContent = apiSortPriceBtnEl.textContent.replace('DESC', 'ASC');
+    sorted = await getProducts('https://fakestoreapi.com/products?sort=desc');
+  }
+  makeShopItemsList(sorted);
+
+  // atnaujinti sarasa
+});
+
 searchBtnEL.addEventListener('click', () => {
   console.log('search event', searchEl.value);
   const searchTerm = searchEl.value.trim();
@@ -38,8 +57,8 @@ searchBtnEL.addEventListener('click', () => {
 });
 
 // funkcijos --------------------------------------------------------------
-async function getProducts() {
-  const resp = await fetch(url);
+async function getProducts(argUrl) {
+  const resp = await fetch(argUrl);
   const dataInJS = await resp.json();
   console.log('dataInJS ===', dataInJS);
   mainShopItemsArr = dataInJS;
@@ -72,7 +91,7 @@ function makeOneCard(shopObj) {
   divEl.className = 'shop-item card';
   divEl.innerHTML = `
   <img src="${shopObj.image}" alt="preke">
-  <h3>${shopObj.title}</h3>
+  <h3>${shopObj.title.slice(0, 30)}...</h3>
   <p class="price">€${shopObj.price.toFixed(2)}</p>
   <p>Category: ${shopObj.category}</p>
   <div class="control">
