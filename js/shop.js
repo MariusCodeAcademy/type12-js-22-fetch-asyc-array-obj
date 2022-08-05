@@ -2,7 +2,7 @@
 console.log('shop.js');
 
 let url = 'https://fakestoreapi.com/products';
-url = 'data/prod.json';
+// url = 'data/prod.json';
 
 // taikomes
 const shopItemsEl = document.getElementById('shop-items');
@@ -34,14 +34,16 @@ apiSortPriceBtnEl.addEventListener('mousedown', async () => {
   // https://fakestoreapi.com/products?sort=desc
   // https://fakestoreapi.com/products?sort=asc
   console.log('sort api');
-  let sorted;
+  // let sorted;
+  url = 'https://fakestoreapi.com/products';
   if (apiSortPriceBtnEl.textContent.toLocaleLowerCase().endsWith('asc')) {
     apiSortPriceBtnEl.textContent = apiSortPriceBtnEl.textContent.replace('ASC', 'DESC');
-    sorted = await getProducts('https://fakestoreapi.com/products?sort=asc');
+    url += '?sort=asc';
   } else {
     apiSortPriceBtnEl.textContent = apiSortPriceBtnEl.textContent.replace('DESC', 'ASC');
-    sorted = await getProducts('https://fakestoreapi.com/products?sort=desc');
+    url += '?sort=desc';
   }
+  let sorted = await getProducts(url);
   makeShopItemsList(sorted);
 
   // atnaujinti sarasa
@@ -87,6 +89,7 @@ function makeShopItemsList(shopItemsArr) {
 function makeOneCard(shopObj) {
   // pagaminam ir grazinam viena item
   // img, price, title, category
+  // console.log('shopObj ===', shopObj);
   const divEl = document.createElement('div');
   divEl.className = 'shop-item card';
   divEl.innerHTML = `
@@ -96,7 +99,7 @@ function makeOneCard(shopObj) {
   <p>Category: ${shopObj.category}</p>
   <div class="control">
     <button class="buy-btn">Buy</button>
-    <button>More info</button>
+    <a href="single-preke.html?id=${shopObj.id}" >More info</a>
   </div>
   `;
   return divEl;
